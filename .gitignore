@@ -1,0 +1,73 @@
+# 依赖
+node_modules/
+.pnp
+.pnp.*
+
+# 测试
+coverage/
+.nyc_output/
+
+# Next.js
+.next/
+out/
+build/
+dist/
+
+# 缓存
+.cache/
+.turbo/
+.vercel/
+
+# 调试
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.tsbuildinfo
+
+# 环境
+.env*.local
+.env
+
+# 内部文档（用户决策 2026-08-10：docs/ 不进 git 仓库）
+# 内部策略与决策分析留在本地仓库，公开仓库仅保留 README
+/docs/
+
+# AGENTS.md：agent 内部记忆（中文 + 内部决策 + agent workflow），不入公开仓库
+# 团队本地保留供 AI agent + maintainer 阅读；公开仓库访客看 README 已足够
+/AGENTS.md
+
+# Next.js 自动生成（官方约定：build 时触发，不应进 git）
+next-env.d.ts
+
+# 测试 / Playwright / MCP 输出（dev 调试产物）
+test-results/
+/playwright-report/
+/.playwright-mcp/
+
+# 内部设计资产（非产品素材；47KB 设计预览 + 2 张修复截图）
+/design/
+/design-preview-papel.png
+/dev-prod-after-fix.png
+
+# AI agent 与 IDE 工具配置（团队偏好，独立于产品代码）
+/opencode.json
+/.obsidian/
+/.sisyphus/
+
+# 编辑器
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+
+# 日志
+logs/
+*.log
+
+# 上传/临时
+tmp/
+temp/
+
+# 转换引擎缓存（如果未来加服务端）
+.engine-cache/

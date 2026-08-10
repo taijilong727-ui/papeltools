@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- Papel Tools 折纸图标占位（PRD M-10：MVP 用折纸图标占位 logo） -->
+  <!-- 设计：朱红色背景 + 米色折纸文档图标 -->
+  <rect width="32" height="32" rx="4" fill="#a8432c"/>
+  <path d="M11 6h7l5 5v15a1 1 0 0 1-1 1H11a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1z" fill="#fbf8f1"/>
+  <path d="M18 6v5h5" fill="none" stroke="#a8432c" stroke-width="1" stroke-linejoin="round"/>
+  <path d="M13 14h7M13 18h7M13 22h4" stroke="#a8432c" stroke-width="1.4" stroke-linecap="round"/>
+</svg>

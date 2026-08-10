@@ -1,0 +1,171 @@
+/*
+ * Papel Tools 全局样式
+ *
+ * 主题：Papel — 纸感极简（MUJI / Aesop / Stripe Press 风格）
+ * 设计令牌来源：docs/首页风格设计方案-2026-08-03.md §2.2
+ *
+ * Tailwind v4 用 @import "tailwindcss" 入口，
+ * 设计令牌用 @theme 定义，编译期生成对应工具类。
+ */
+
+@import "tailwindcss";
+
+/* ============================================================
+   设计令牌（@theme） — 编译期生成工具类
+   参考：Tailwind v4 @theme 文档
+   ============================================================ */
+@theme {
+  /* 颜色：纸感极简 */
+  --color-paper: #f6f2ea;        /* 背景：纸白 */
+  --color-paper-soft: #fbf8f1;  /* 表面：浅纸 */
+  --color-ink: #1d1b17;          /* 主文本：墨黑 */
+  --color-ink-soft: #6f6a5e;     /* 次文本：淡墨 */
+  --color-rule: #e2dccd;         /* 边框：发丝线 */
+  --color-accent: #a8432c;       /* 强调：朱红 */
+  --color-accent-soft: #fbf8f1;  /* 强调文字反色 */
+  --color-warn: #b45309;         /* 警告 */
+  --color-error: #991b1b;        /* 错误 */
+
+  /* 字体（next/font 注入的 CSS 变量优先，fallback 链保留应对字体加载失败）
+     注意：不能用 var(--font-newsreader)，因为 Tailwind v4 dev 模式下 @theme 内的 var() 引用
+     不会被解析为可用的 CSS 自定义属性，会导致 body font-family fallback 到 system-ui。 */
+  --font-serif: "Newsreader", "Newsreader Fallback", "Source Serif Pro", Georgia, serif;
+  --font-mono: "IBM Plex Mono", "IBM Plex Mono Fallback", "JetBrains Mono", ui-monospace, monospace;
+  --font-sans: "Newsreader", "Newsreader Fallback", Georgia, serif;
+
+  /* 圆角：直角细边（纸感） */
+  --radius-sm: 2px;
+  --radius-md: 4px;
+  --radius-lg: 8px;
+
+  /* 间距刻度（默认 Tailwind 即可，不覆盖） */
+
+  /* 阴影：禁用投影，仅发丝线（纸感） */
+  --shadow-none: none;
+  --shadow-sm: 0 1px 0 rgba(29, 27, 23, 0.03);
+}
+
+/* ============================================================
+   基础样式重置（纸感主题）
+   ============================================================ */
+html {
+  scroll-behavior: smooth;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-serif);
+  font-feature-settings: "ss01", "kern", "liga";
+  line-height: 1.65;
+  /* 顶部微光晕（呼应设计预览） */
+  background-image: radial-gradient(
+    ellipse 70% 45% at 50% -8%,
+    rgba(168, 67, 44, 0.05),
+    transparent 60%
+  );
+  background-attachment: fixed;
+}
+
+/* 选区颜色 */
+::selection {
+  background: var(--color-accent);
+  color: var(--color-accent-soft);
+}
+
+/* ============================================================
+   排版工具类
+   ============================================================ */
+.font-display {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+.font-mono {
+  font-family: var(--font-mono);
+}
+
+.headline-hero {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: clamp(2.75rem, 7.6vw, 5.75rem);
+  letter-spacing: -0.01em;
+  line-height: 1.05;
+  text-wrap: balance;
+}
+
+.headline-section {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: clamp(2rem, 4.6vw, 3.25rem);
+  letter-spacing: -0.02em;
+  line-height: 1.08;
+  text-wrap: balance;
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+/* ============================================================
+   区块编号（01-06 风格）
+   ============================================================ */
+.section-number {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  letter-spacing: 0.06em;
+  color: var(--color-accent);
+}
+
+/* ============================================================
+   转换器纸感容器
+   ============================================================ */
+.paper-card {
+  background: var(--color-paper-soft);
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-lg);
+}
+
+.paper-divider {
+  border-top: 1px solid var(--color-rule);
+}
+
+/* ============================================================
+   焦点环（无障碍）
+   ============================================================ */
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* ============================================================
+   减少动效
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ============================================================
+   打印样式（用户打印转换结果时）
+   ============================================================ */
+@media print {
+  body {
+    background: white;
+    color: black;
+  }
+}

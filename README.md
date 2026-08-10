@@ -1,6 +1,6 @@
 # Papel Tools
 
-> **Privacy-first PDF to Markdown converter** — runs 100% in your browser. Files never leave your device.
+> **Privacy-first PDF to Markdown converter** —runs 100% in your browser. Files never leave your device.
 > Also available as a remote MCP server for AI agents.
 
 [![Engine License](https://img.shields.io/badge/license-MIT-green)]()
@@ -30,17 +30,17 @@
 
 ## Why Papel Tools?
 
-PDF → Markdown is the fastest-growing document-conversion category in 2025–2026, driven by LLM/RAG demand for clean text. Every existing tool falls into one of three gaps:
+PDF —Markdown is the fastest-growing document-conversion category in 2025—026, driven by LLM/RAG demand for clean text. Every existing tool falls into one of three gaps:
 
-1. **They upload your file** — privacy risk for sensitive documents (contracts, medical records, internal reports).
-2. **No MCP support** — AI agents cannot chain them into workflows.
-3. **English-only** — Latin American and Brazilian users get a poor experience.
+1. **They upload your file** —privacy risk for sensitive documents (contracts, medical records, internal reports).
+2. **No MCP support** —AI agents cannot chain them into workflows.
+3. **English-only** —Latin American and Brazilian users get a poor experience.
 
 Papel Tools fills all three:
 
-- **100% client-side** — open DevTools → Network during conversion, confirm zero document requests.
-- **Native MCP server** — `POST /api/mcp` with three tools (`convert_pdf`, `preview_pdf`, `list_supported_formats`).
-- **Trilingual UI** — English, Spanish (es-419, Latin American), Brazilian Portuguese (pt-BR).
+- **100% client-side** —open DevTools —Network during conversion, confirm zero document requests.
+- **Native MCP server** —`POST /api/mcp` with three tools (`convert_pdf`, `preview_pdf`, `list_supported_formats`).
+- **Trilingual UI** —English, Spanish (es-419, Latin American), Brazilian Portuguese (pt-BR).
 
 Open an incognito window, drop a PDF, and watch zero requests leave the page.
 
@@ -50,26 +50,26 @@ Open an incognito window, drop a PDF, and watch zero requests leave the page.
 
 ### Web Converter (zero uploads, browser-only)
 
-- Text-based PDFs → Markdown via `@pdf2md/core` + `pdf.js` v5.
+- Text-based PDFs —Markdown via `@pdf2md/core` + `pdf.js` v5.
 - Drag-and-drop or click-to-browse upload.
 - Real-time progress + cancel (`AbortSignal`).
 - Markdown preview, `.md` download, clipboard copy.
 - Token / page / word / duration metadata.
 - Trilingual UI: English, Spanish (es-419), Brazilian Portuguese (pt-BR).
-- Hard limits: 200 MB upload, 15 MB engine ceiling — refuses larger files with clear messaging.
-- Worker crash auto-retry — failed conversions transparently restart with the original buffer.
-- Scanned PDFs → one-click OCR fallback (eng / spa / por via Tesseract.js, fully client-side).
+- Hard limits: 200 MB upload, 15 MB engine ceiling —refuses larger files with clear messaging.
+- Worker crash auto-retry —failed conversions transparently restart with the original buffer.
+- Scanned PDFs —one-click OCR fallback (eng / spa / por via Tesseract.js, fully client-side).
 - `SoftwareApplication` + `FAQPage` JSON-LD for AI-crawler discoverability.
 
 ### Remote MCP Server (`POST /api/mcp`)
 
 - Streamable HTTP over JSON-RPC 2.0 (`@modelcontextprotocol/sdk` 1.30.x).
 - Three tools: `convert_pdf`, `preview_pdf`, `list_supported_formats`.
-- Stateless design — Vercel Serverless cold-start safe (no shared session map).
+- Stateless design —Vercel Serverless cold-start safe (no shared session map).
 - IP rate limit (60/min) via `@upstash/ratelimit` (in-memory fallback in dev).
 - Origin whitelist in production via `ALLOWED_ORIGINS` env (fail-closed by default).
 - Discovery endpoint: `GET /.well-known/mcp/server-card.json`.
-- Limits: **3 MB / 50 pages** — text-based PDFs only. Scanned PDFs return a clear error.
+- Limits: **3 MB / 50 pages** —text-based PDFs only. Scanned PDFs return a clear error.
 
 ---
 
@@ -77,13 +77,13 @@ Open an incognito window, drop a PDF, and watch zero requests leave the page.
 
 ### Prerequisites
 
-- Node.js ≥ 20.9.0 (Next.js 16 engine requirement).
-- npm ≥ 10 (or pnpm ≥ 9, or yarn ≥ 4).
+- Node.js ≥?20.9.0 (Next.js 16 engine requirement).
+- npm ≥?10 (or pnpm ≥?9, or yarn ≥?4).
 
 ### Install & Run
 
 ```bash
-git clone https://github.com/your-user/papeltools.git
+git clone https://github.com/taijilong727-ui/papeltools.git
 cd papeltools
 npm install
 npm run dev
@@ -111,7 +111,7 @@ npm run test:e2e    # Playwright (converter + privacy + OCR)
 1. Open `http://localhost:3000/en/`.
 2. Drag any text-based PDF onto the converter.
 3. Watch the progress bar; download `.md` or copy to clipboard.
-4. **Privacy check**: DevTools → Network → confirm **zero document requests** during conversion.
+4. **Privacy check**: DevTools —Network —confirm **zero document requests** during conversion.
 
 ### Verify the MCP Endpoint
 
@@ -160,7 +160,7 @@ Returns three tools: `convert_pdf` (full conversion), `preview_pdf` (truncated t
 npx @modelcontextprotocol/inspector https://papeltools.com/api/mcp
 ```
 
-### Coming soon — Local stdio package
+### Coming soon —Local stdio package
 
 Phase 2 will publish `@papeltools/pdf-to-markdown-mcp`, a stdio transport that runs entirely on your machine and never contacts our server. Useful for maximum-privacy workflows and offline use.
 
@@ -184,7 +184,7 @@ flowchart LR
   Engine -->|"Markdown"| Client
 ```
 
-**Key principle**: the in-browser worker and the serverless MCP function share the **same** `@pdf2md/core` package. There is one conversion pipeline, not two — change logic once, ship to both products.
+**Key principle**: the in-browser worker and the serverless MCP function share the **same** `@pdf2md/core` package. There is one conversion pipeline, not two —change logic once, ship to both products.
 
 The browser path runs entirely in a Web Worker (off the main thread) so the UI stays responsive even on 50-page PDFs.
 
@@ -215,30 +215,30 @@ The project is pre-configured for **Vercel hybrid mode** (SSG pages + 1 serverle
 
 ### One-Click Deploy
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fyour-user%2Fpapeltools)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Ftaijilong727-ui%2Fpapeltools)
 
 ### Manual Steps
 
 1. Import the GitHub repository in Vercel (framework auto-detected as Next.js).
-2. Configure environment variables in **Settings → Environment Variables**:
+2. Configure environment variables in **Settings —Environment Variables**:
 
    | Variable                        | Required | Notes |
    |---------------------------------|----------|-------|
-   | `UPSTASH_REDIS_REST_URL`        | yes      | [Upstash Console](https://console.upstash.com) → REST API |
+   | `UPSTASH_REDIS_REST_URL`        | yes      | [Upstash Console](https://console.upstash.com) —REST API |
    | `UPSTASH_REDIS_REST_TOKEN`      | yes      | same |
    | `ALLOWED_ORIGINS`               | yes      | comma-separated. Example: `https://papeltools.com,https://www.papeltools.com` |
    | `MCP_REMOTE_URL`                | optional | override the public endpoint URL |
 
-3. Click **Deploy**. Build takes 2–5 minutes (pdf.js + tesseract.js bundles are large).
-4. After deployment, add `papeltools.com` in **Settings → Domains**.
+3. Click **Deploy**. Build takes 2— minutes (pdf.js + tesseract.js bundles are large).
+4. After deployment, add `papeltools.com` in **Settings —Domains**.
 
 ### DNS Configuration
 
 - **Registrar**: Spaceship.
 - **DNS**: Cloudflare (free tier).
 - **Records**:
-  - `CNAME @` → `cname.vercel-dns.com` (DNS only)
-  - `CNAME www` → `cname.vercel-dns.com` (DNS only)
+- `CNAME @` → `cname.vercel-dns.com` (DNS only)
+- `CNAME www` → `cname.vercel-dns.com` (DNS only)
 
 Vercel auto-issues Let's Encrypt SSL once DNS resolves.
 
@@ -246,11 +246,11 @@ Vercel auto-issues Let's Encrypt SSL once DNS resolves.
 
 ## Privacy
 
-Papel Tools ships **two independent products** with separate privacy guarantees — please read both:
+Papel Tools ships **two independent products** with separate privacy guarantees —please read both:
 
 ### Web Converter (browser)
 
-- **Zero uploads** — open DevTools → Network during conversion, confirm **zero document requests**.
+- **Zero uploads** —open DevTools —Network during conversion, confirm **zero document requests**.
 - Files are processed entirely in a Web Worker via `@pdf2md/core`.
 - OCR fallback runs Tesseract.js in the same worker; language models cache in your browser.
 - Locale preference is stored in a `NEXT_LOCALE` cookie. No analytics, no telemetry.
@@ -264,17 +264,17 @@ Papel Tools ships **two independent products** with separate privacy guarantees 
 
 ### Maximum Privacy
 
-For maximum privacy, use the upcoming **local stdio package** (`@papeltools/pdf-to-markdown-mcp`, Phase 2) — it runs entirely on your machine and never contacts our server.
+For maximum privacy, use the upcoming **local stdio package** (`@papeltools/pdf-to-markdown-mcp`, Phase 2) —it runs entirely on your machine and never contacts our server.
 
 ---
 
 ## Roadmap
 
-- [x] **Phase 1** — Web converter + remote MCP, Vercel hybrid mode (live).
-- [ ] **Phase 2** — Local stdio npm package (`@papeltools/pdf-to-markdown-mcp`).
-- [ ] **Phase 3** — MCP Registry / Smithery registration, OAuth.
-- [ ] **Phase 4** — Blog, batch conversion, remote MCP OCR support.
-- [ ] **Phase 5** — WebGPU TrOCR high-accuracy mode, AdSense (content pages only).
+- [x] **Phase 1** —Web converter + remote MCP, Vercel hybrid mode (live).
+- [ ] **Phase 2** —Local stdio npm package (`@papeltools/pdf-to-markdown-mcp`).
+- [ ] **Phase 3** —MCP Registry / Smithery registration, OAuth.
+- [ ] **Phase 4** —Blog, batch conversion, remote MCP OCR support.
+- [ ] **Phase 5** —WebGPU TrOCR high-accuracy mode, AdSense (content pages only).
 
 ---
 
@@ -286,7 +286,7 @@ Issues and PRs are welcome on GitHub. For substantial changes:
 2. Run `npm run typecheck && npm run lint && npm run test:unit` before submitting.
 3. For UI changes, also run `npm run test:e2e`.
 
-The conversion engine lives in `lib/engine/` (shared by web + MCP). Please do not fork the logic across endpoints — extend the engine instead.
+The conversion engine lives in `lib/engine/` (shared by web + MCP). Please do not fork the logic across endpoints —extend the engine instead.
 
 Translation contributions for `messages/es.json` and `messages/pt.json` follow the same i18n key structure; all three dictionaries must stay in sync with `messages/en.json`.
 
@@ -294,9 +294,11 @@ Translation contributions for `messages/es.json` and `messages/pt.json` follow t
 
 ## License
 
-- **Conversion engine** (`lib/engine/`) — MIT (derived from `@pdf2md/core`).
-- **Application code** (`app/`, `components/`, `workers/`, MCP routing) — see [LICENSE](./LICENSE) (default: all rights reserved).
-- **Brand and trademarks** ("Papel Tools", "papeltools.com") — all rights reserved. Contact us for collaboration.
+This project is released under the [MIT License](./LICENSE).
+
+- **Application code** (`app/`, `components/`, `workers/`, `lib/`, MCP routing) - MIT (see [LICENSE](./LICENSE)).
+- **Conversion engine** (`lib/engine/`) - MIT, derived from `@pdf2md/core`.
+- **Brand and trademarks** ("Papel Tools", "papeltools.com") - all rights reserved. The MIT license covers the code only; the brand name and domain are not licensed for reuse without permission. Contact us for collaboration.
 
 ---
 

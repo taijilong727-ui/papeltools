@@ -1,6 +1,6 @@
 {
   "name": "papeltools",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "description": "Papel Tools - Privacy-first PDF to Markdown converter running 100% in the browser.",
   "scripts": {

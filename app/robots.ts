@@ -20,7 +20,7 @@ export default function robots() {
       {
         userAgent: '*',
         allow: '/',
-        disallow: ['/api/'],
+        disallow: ['/api/', '/_next/'],
       },
       // 放行 AI 检索爬虫
       { userAgent: 'OAI-SearchBot', allow: '/' },
@@ -38,6 +38,5 @@ export default function robots() {
       { userAgent: 'Bytespider', disallow: '/' },
     ],
     sitemap: 'https://papeltools.com/sitemap.xml',
-    host: 'https://papeltools.com',
   };
 }

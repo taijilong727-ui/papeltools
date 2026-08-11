@@ -16,6 +16,14 @@ export const MCP_SERVER_NAME = 'papeltools-mcp';
 export const MCP_SERVER_VERSION = '0.2.0';
 
 /**
+ * MCP SDK 版本（与 package.json "@modelcontextprotocol/sdk" 声明范围对齐）。
+ * 真实运行时版本由 package-lock.json 解析（AGENTS.md 写的 1.30.x 是 resolved 版本，
+ * 声明范围仍是 ^1.29.0）。用于 llms.txt / 外部文档标识，避免与 MCP_SERVER_VERSION 混淆
+ * （后者是 *我们服务器* 的版本，不是 SDK 版本）。
+ */
+export const MCP_SDK_VERSION = '1.29.0';
+
+/**
  * 服务描述（用于 initialize 响应 + server-card.json）
  * 明确说明：
  * - 远程端"一次上传"语义（与浏览器端零上传原则不冲突 — 隐私边界见 AGENTS.md 锁定决策）

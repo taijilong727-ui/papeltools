@@ -22,7 +22,7 @@ export const jsonSamples = {
   claudeDesktopConfig: `{
   "mcpServers": {
     "papeltools": {
-      "url": "https://papeltools.com/api/mcp",
+      "url": "https://www.papeltools.com/api/mcp",
       "transport": "streamable-http"
     }
   }
@@ -31,7 +31,7 @@ export const jsonSamples = {
   cursorConfig: `{
   "mcpServers": {
     "papeltools": {
-      "url": "https://papeltools.com/api/mcp"
+      "url": "https://www.papeltools.com/api/mcp"
     }
   }
 }`,
@@ -40,7 +40,7 @@ export const jsonSamples = {
   "mcp": {
     "servers": {
       "papeltools": {
-        "url": "https://papeltools.com/api/mcp",
+        "url": "https://www.papeltools.com/api/mcp",
         "type": "http"
       }
     }

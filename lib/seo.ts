@@ -8,7 +8,15 @@
 import type { Metadata } from 'next';
 import { locales, hreflangMap, type Locale } from '@/lib/i18n/config';
 
-export const SITE_URL = 'https://papeltools.com';
+/**
+ * 站点 canonical URL — 全 SSG/PRERENDER 共享单一源
+ *
+ * 2026-08-11 改成 www 子域：Vercel Domain 层把 apex (papeltools.com) 308 → www，
+ * 之前所有 sitemap/canonical/hreflang/JSON-LD 都用 apex，触发每次抓取一跳重定向，
+ * 既拖慢首次索引（"为改而改" 风险累积），又与 README/AGENTS.md 里写的 apex 不一致。
+ * 改成 www 后，与实际部署 canonical 对齐，所有爬虫抓取 200 直出。
+ */
+export const SITE_URL = 'https://www.papeltools.com';
 
 /**
  * 构造绝对 URL — 与 lib/i18n/pageMetadata 规则一致：

@@ -12,7 +12,7 @@
  */
 
 import { NextResponse } from 'next/server';
-import { MCP_SERVER_NAME, MCP_SERVER_VERSION, MCP_SERVER_DESCRIPTION } from '@/lib/mcp/info';
+import { MCP_SDK_VERSION } from '@/lib/mcp/info';
 
 export const runtime = 'nodejs';
 
@@ -20,6 +20,11 @@ export const runtime = 'nodejs';
 export const dynamic = 'force-static';
 
 const SITE_URL = 'https://papeltools.com';
+const MCP_REMOTE_URL = `${SITE_URL}/api/mcp`;
+const MCP_TRANSPORT_NAME = 'WebStandardStreamableHTTPServerTransport';
+const TECH_PDF2MD = '@pdf2md/core';
+const TECH_MCP_SDK = `@modelcontextprotocol/sdk ${MCP_SDK_VERSION}`;
+const TECH_RATELIMIT = '@upstash/ratelimit (slidingWindow 60/min) + in-memory dev fallback';
 
 export async function GET() {
   const body = `# Papel Tools
@@ -141,13 +146,3 @@ For programmatic / agent integration:
     },
   });
 }
-
-const MCP_REMOTE_URL = `${SITE_URL}/api/mcp`;
-const MCP_TRANSPORT_NAME = 'WebStandardStreamableHTTPServerTransport';
-const TECH_PDF2MD = '@pdf2md/core';
-const TECH_MCP_SDK = `@modelcontextprotocol/sdk ${MCP_SERVER_VERSION}`;
-const TECH_RATELIMIT = '@upstash/ratelimit (slidingWindow 60/min) + in-memory dev fallback';
-
-// 抑制未使用警告（info.ts 实际供 runtime 使用）
-void MCP_SERVER_NAME;
-void MCP_SERVER_DESCRIPTION;

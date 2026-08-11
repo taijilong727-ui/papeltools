@@ -20,7 +20,7 @@ export const dynamic = 'force-static';
 const LAST_MODIFIED = '2026-08-11';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://papeltools.com';
+  const baseUrl = 'https://www.papeltools.com';
   const lastModified = new Date(LAST_MODIFIED);
 
   const routes = [

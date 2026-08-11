@@ -19,7 +19,7 @@ export const runtime = 'nodejs';
 /** Next.js 静态导出要求 force-static（与 robots.ts / sitemap.ts 一致） */
 export const dynamic = 'force-static';
 
-const SITE_URL = 'https://papeltools.com';
+const SITE_URL = 'https://www.papeltools.com';
 const MCP_REMOTE_URL = `${SITE_URL}/api/mcp`;
 const MCP_TRANSPORT_NAME = 'WebStandardStreamableHTTPServerTransport';
 const TECH_PDF2MD = '@pdf2md/core';

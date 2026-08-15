@@ -235,10 +235,10 @@ The project is pre-configured for **Vercel hybrid mode** (SSG pages + 1 serverle
 ### DNS Configuration
 
 - **Registrar**: Spaceship.
-- **DNS**: Cloudflare (free tier).
+- **DNS**: Cloudflare (free tier, **orange cloud / proxied** — Cloudflare Managed Robots adds a `Content-Signal: search=yes,ai-train=no,use=reference` header and a 9-bot AI training-crawler blocklist ahead of the origin response; the `app/robots.ts` output is preserved after the injection).
 - **Records**:
-- `CNAME @` → `cname.vercel-dns.com` (DNS only)
-- `CNAME www` → `cname.vercel-dns.com` (DNS only)
+- `CNAME @` → `cname.vercel-dns.com` (proxied)
+- `CNAME www` → `cname.vercel-dns.com` (proxied)
 
 Vercel auto-issues Let's Encrypt SSL once DNS resolves.
 

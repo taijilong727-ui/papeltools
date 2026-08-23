@@ -51,6 +51,7 @@ export function Footer({ locale }: FooterProps) {
               <li><Link href={`/${locale}/pdf-to-markdown-mcp`} className="text-[14.5px] text-[var(--color-ink-soft)] hover:text-[var(--color-ink)] transition-colors">{t('productMcp')}</Link></li>
               <li><Link href={`/${locale}/pdf-to-markdown-for-llm`} className="text-[14.5px] text-[var(--color-ink-soft)] hover:text-[var(--color-ink)] transition-colors">{t('productLlm')}</Link></li>
               <li><Link href={`/${locale}/pdf-to-markdown-for-obsidian`} className="text-[14.5px] text-[var(--color-ink-soft)] hover:text-[var(--color-ink)] transition-colors">{t('productObsidian')}</Link></li>
+              <li><a href="https://chromewebstore.google.com/detail/papel-tools-pdf-to-markdo/hogkjfcelpcjodkmoegippbdkmnaapmj" target="_blank" rel="noopener noreferrer" className="text-[14.5px] text-[var(--color-ink-soft)] hover:text-[var(--color-ink)] transition-colors">{t('productChrome')}</a></li>
             </ul>
           </div>
 
@@ -77,8 +78,8 @@ export function Footer({ locale }: FooterProps) {
               <li><Link href={`/${locale}/privacy`} className="text-[14.5px] text-[var(--color-ink-soft)] hover:text-[var(--color-ink)] transition-colors">{t('companyPrivacy')}</Link></li>
               <li><Link href={`/${locale}/terms`} className="text-[14.5px] text-[var(--color-ink-soft)] hover:text-[var(--color-ink)] transition-colors">{t('companyTerms')}</Link></li>
               <li><Link href={`/${locale}/contact`} className="text-[14.5px] text-[var(--color-ink-soft)] hover:text-[var(--color-ink)] transition-colors">{t('companyContact')}</Link></li>
-              {/* TODO: GitHub 项目上线后恢复为 <a href="https://github.com/papeltools" ...> — 当前项目未实现，降级为纯文本避免 404 */}
-              <li><span className="text-[14.5px] text-[var(--color-ink-soft)] opacity-50 cursor-default">{t('companyGithub')}</span></li>
+              {/* GitHub 项目已于 2026-08-23 转 public（commit `60cf9a1`），激活外链 */}
+              <li><a href="https://github.com/taijilong727-ui/papeltools" target="_blank" rel="noopener noreferrer" className="text-[14.5px] text-[var(--color-ink-soft)] hover:text-[var(--color-ink)] transition-colors">{t('companyGithub')}</a></li>
               {/* 位置 B：Footer 常驻捐赠入口（共享 DonateLink 组件） */}
               <li><DonateLink variant="footer" /></li>
             </ul>

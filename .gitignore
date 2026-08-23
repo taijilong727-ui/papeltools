@@ -32,6 +32,13 @@ yarn-error.log*
 # 内部策略与决策分析留在本地仓库，公开仓库仅保留 README
 /docs/
 
+# Chrome 扩展内部同步文档（主仓库 vs 扩展代码漂移 + 手工 cherry-pick SOP）
+# 对外部贡献者无用，留在本地维护；公开仓库只保留 extension/README.md
+/extension/SYNC_NOTES.md
+
+# 本地调试脚本（Upstash 接入验证用，含 power-shell 环境 hack），不入公开仓库
+/.smoke-env.cmd
+
 # AGENTS.md：agent 内部记忆（中文 + 内部决策 + agent workflow），不入公开仓库
 # 团队本地保留供 AI agent + maintainer 阅读；公开仓库访客看 README 已足够
 /AGENTS.md

@@ -178,6 +178,7 @@
     "productMcp": "PDF to Markdown MCP",
     "productLlm": "PDF to Markdown for LLM",
     "productObsidian": "PDF to Markdown for Obsidian",
+    "productChrome": "Chrome extension",
     "resourcesHeading": "Resources",
     "resourcesRag": "PDF to Markdown for RAG",
     "resourcesNoUpload": "Free PDF to Markdown (No Upload)",

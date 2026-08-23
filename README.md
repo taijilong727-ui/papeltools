@@ -6,7 +6,7 @@
 [![Engine License](https://img.shields.io/badge/license-MIT-green)]()
 [![Deploy](https://img.shields.io/badge/deploy-Vercel-black)]()
 [![MCP](https://img.shields.io/badge/MCP-compatible-blue)]()
-[![Node 20.9+](https://img.shields.io/badge/node-%3E%3D20.9-339933)]()
+[![Node >=20.9](https://img.shields.io/badge/node-%3E%3D20.9-339933)]()
 
 [Live demo](https://papeltools.com) · [MCP endpoint](https://papeltools.com/api/mcp) · [Server card](https://papeltools.com/.well-known/mcp/server-card.json)
 
@@ -30,7 +30,7 @@
 
 ## Why Papel Tools?
 
-PDF —Markdown is the fastest-growing document-conversion category in 2025—026, driven by LLM/RAG demand for clean text. Every existing tool falls into one of three gaps:
+PDF-to-Markdown is the fastest-growing document-conversion category in 2025-2026, driven by LLM/RAG demand for clean text. Every existing tool falls into one of three gaps:
 
 1. **They upload your file** —privacy risk for sensitive documents (contracts, medical records, internal reports).
 2. **No MCP support** —AI agents cannot chain them into workflows.
@@ -77,8 +77,8 @@ Open an incognito window, drop a PDF, and watch zero requests leave the page.
 
 ### Prerequisites
 
-- Node.js ≥?20.9.0 (Next.js 16 engine requirement).
-- npm ≥?10 (or pnpm ≥?9, or yarn ≥?4).
+- Node.js >=20.9.0 (Next.js 16 engine requirement).
+- npm >=10 (or pnpm >=9, or yarn >=4).
 
 ### Install & Run
 
@@ -229,7 +229,7 @@ The project is pre-configured for **Vercel hybrid mode** (SSG pages + 1 serverle
    | `ALLOWED_ORIGINS`               | yes      | comma-separated. Example: `https://papeltools.com,https://www.papeltools.com` |
    | `MCP_REMOTE_URL`                | optional | override the public endpoint URL |
 
-3. Click **Deploy**. Build takes 2— minutes (pdf.js + tesseract.js bundles are large).
+3. Click **Deploy**. Build takes 2-3 minutes (pdf.js + tesseract.js bundles are large).
 4. After deployment, add `papeltools.com` in **Settings —Domains**.
 
 ### DNS Configuration

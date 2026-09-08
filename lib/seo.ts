@@ -11,12 +11,17 @@ import { locales, hreflangMap, type Locale } from '@/lib/i18n/config';
 /**
  * 站点 canonical URL — 全 SSG/PRERENDER 共享单一源
  *
- * 2026-08-11 改成 www 子域：Vercel Domain 层把 apex (papeltools.com) 308 → www，
- * 之前所有 sitemap/canonical/hreflang/JSON-LD 都用 apex，触发每次抓取一跳重定向，
- * 既拖慢首次索引（"为改而改" 风险累积），又与 README/AGENTS.md 里写的 apex 不一致。
- * 改成 www 后，与实际部署 canonical 对齐，所有爬虫抓取 200 直出。
+ * 2026-09-08 切回 apex (papeltools.com)：
+ * - AGENTS.md 锁定"根域无子域"（MCP 域名 papeltools.com/api/mcp）
+ * - 2026-08-11 v1.1 改 www 子域是 Vercel Domain 配置下的妥协（apex 308 → www）
+ * - 2026-09-08 配套 Vercel Dashboard 把 apex 设为 primary domain，
+ *   代码 SITE_URL 同步改回 apex，redirect 链从 3 跳缩减到 1-2 跳
+ * - 与 README、AGENTS.md、Chrome Web Store 4 条外链（已指 apex）全部对齐
+ *
+ * 历史：2026-08-11 v1.1 短暂用过 www，发现正确组合是 apex primary + 代码 SITE_URL = apex
+ * （而非 www primary + 代码 SITE_URL = www），2026-09-08 切回 apex 永久锁定。
  */
-export const SITE_URL = 'https://www.papeltools.com';
+export const SITE_URL = 'https://papeltools.com';
 
 /**
  * 构造绝对 URL — 与 lib/i18n/pageMetadata 规则一致：

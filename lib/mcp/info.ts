@@ -39,7 +39,7 @@ export const MCP_SERVER_DESCRIPTION =
  * 默认生产 URL：`https://papeltools.com/api/mcp`。
  */
 export const MCP_REMOTE_URL =
-  process.env.MCP_REMOTE_URL ?? 'https://www.papeltools.com/api/mcp';
+  process.env.MCP_REMOTE_URL ?? 'https://papeltools.com/api/mcp';
 
 /** MCP Registry 注册类别 */
 export const MCP_REGISTRY_CATEGORIES = [

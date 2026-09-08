@@ -80,15 +80,15 @@ describe('app/robots.ts — 源站规则完整性', () => {
     it('指向 canonical www.papeltools.com/sitemap.xml', () => {
       // 2026-08-11 v1.1 修复：从 apex 切到 www，与 canonical 对齐
       // 此前用 apex 会导致每次爬虫多一跳 308（Vercel Domain 层 apex→www 重定向）
-      expect(result.sitemap).toBe('https://www.papeltools.com/sitemap.xml');
+      expect(result.sitemap).toBe('https://papeltools.com/sitemap.xml');
     });
 
     it('使用 https 协议（不是 http）', () => {
       expect(result.sitemap).toMatch(/^https:\/\//);
     });
 
-    it('不含 apex 域名（防止 v1.0 的 apex→www 308 链污染）', () => {
-      expect(result.sitemap).not.toMatch(/^https:\/\/papeltools\.com\//);
+    it('使用 apex 域名（对齐 AGENTS.md 锁定"根域无子域" + 配合 Vercel apex primary）', () => {
+      expect(result.sitemap).toMatch(/^https:\/\/papeltools\.com\/sitemap\.xml$/);
     });
   });
 

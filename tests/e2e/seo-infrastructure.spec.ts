@@ -2,7 +2,7 @@
  * E2E SEO 基础设施验收 — 对应 [[Sitemap-Robots-Llms三件套审查与GSC提交指南-2026-08-11]] §11.2 健康检查方法论
  *
  * 覆盖（T-SI-XX）：
- * - T-SI-01 robots.txt：HTTP 200 + 含源站 `User-Agent: *` + `Sitemap: https://www.papeltools.com/sitemap.xml` + 关键 AI 爬虫规则
+ * - T-SI-01 robots.txt：HTTP 200 + 含源站 `User-Agent: *` + `Sitemap: https://papeltools.com/sitemap.xml` + 关键 AI 爬虫规则
  * - T-SI-02 sitemap.xml：HTTP 200 + application/xml + 至少 30 条 <loc>
  * - T-SI-03 llms.txt：HTTP 200 + text/plain + 含 "# Papel Tools" + 含 "@modelcontextprotocol/sdk" 版本号
  *
@@ -46,9 +46,9 @@ test.describe('T-SI SEO 基础设施验收（本地 dev server）', () => {
     expect(body, '屏蔽 CCBot').toContain('CCBot');
     expect(body, '屏蔽 ClaudeBot').toContain('ClaudeBot');
 
-    // Sitemap 声明（必须对齐 canonical www，2026-08-11 v1.1 修复后）
-    expect(body, 'Sitemap 声明对齐 www canonical').toContain(
-      'Sitemap: https://www.papeltools.com/sitemap.xml'
+    // Sitemap 声明（必须对齐 apex canonical，2026-09-08 v1.2 切回 apex 永久锁定）
+    expect(body, 'Sitemap 声明对齐 apex canonical').toContain(
+      'Sitemap: https://papeltools.com/sitemap.xml'
     );
 
     // 不应混入 apex 域名（防止 v1.0 的 308 链污染）

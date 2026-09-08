@@ -37,6 +37,6 @@ export default function robots() {
       { userAgent: 'anthropic-ai', disallow: '/' },
       { userAgent: 'Bytespider', disallow: '/' },
     ],
-    sitemap: 'https://www.papeltools.com/sitemap.xml',
+    sitemap: 'https://papeltools.com/sitemap.xml',
   };
 }

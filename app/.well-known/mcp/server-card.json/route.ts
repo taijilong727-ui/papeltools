@@ -79,7 +79,7 @@ export async function GET(): Promise<NextResponse> {
     ],
     categories: [...MCP_REGISTRY_CATEGORIES],
     license: 'MIT',
-    homepage: 'https://www.papeltools.com',
+    homepage: 'https://papeltools.com',
     // repository: 'https://github.com/papeltools/pdftomd' — GitHub 仓库未上线，暂不暴露避免 Agent 抓取后克隆失败
   };
 

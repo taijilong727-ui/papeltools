@@ -40,8 +40,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: '/pdf-to-markdown-mcp', priority: 0.9, changeFrequency: 'weekly' as const },
     { path: '/pdf-ocr-to-markdown', priority: 0.7, changeFrequency: 'weekly' as const },
     { path: '/pdf-to-markdown-with-tables', priority: 0.7, changeFrequency: 'weekly' as const },
-    // 注：/llms.txt 是根域元数据路由（非内容页），不在 routes 里走 3 语言乘法；
-    // 见下方「非本地化特殊路由」一节单独处理
   ];
 
   // 单语限定路由：仅在指定 locale 下生成（其他 locale notFound）
@@ -92,16 +90,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       // 无 alternates — 单语页面无三语互链
     });
   }
-
-  // 非本地化特殊路由：根域元数据文件，无 locale 前缀、无 hreflang
-  // 例：/llms.txt 是 AI 爬虫入口（无标准提交流程，借 sitemap 链向）
-  sitemapEntries.push({
-    url: `${baseUrl}/llms.txt`,
-    lastModified,
-    changeFrequency: 'monthly' as const,
-    priority: 0.6,
-    // 无 alternates — 根域元数据，无语种概念
-  });
 
   return sitemapEntries;
 }

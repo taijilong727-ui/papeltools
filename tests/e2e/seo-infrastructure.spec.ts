@@ -3,7 +3,7 @@
  *
  * 覆盖（T-SI-XX）：
  * - T-SI-01 robots.txt：HTTP 200 + 含源站 `User-Agent: *` + `Sitemap: https://papeltools.com/sitemap.xml` + 关键 AI 爬虫规则
- * - T-SI-02 sitemap.xml：HTTP 200 + application/xml + 至少 30 条 <loc>
+ * - T-SI-02 sitemap.xml：HTTP 200 + application/xml + 38 条可收录 HTML URL
  * - T-SI-03 llms.txt：HTTP 200 + text/plain + 含 "# Papel Tools" + 含 "@modelcontextprotocol/sdk" 版本号
  * - T-SI-04 根路径：英文首页直接 200，/en/ 永久 308 回根路径
  *
@@ -61,7 +61,7 @@ test.describe('T-SI SEO 基础设施验收（本地 dev server）', () => {
     expect(body, '不应含 host: 字段').not.toMatch(/^Host:/im);
   });
 
-  test('T-SI-02 /sitemap.xml 服务标准 XML + 至少 30 URL', async ({ request }) => {
+  test('T-SI-02 /sitemap.xml 服务标准 XML + 38 个可收录 URL', async ({ request }) => {
     const response = await request.get('/sitemap.xml');
     expect(response.status(), 'sitemap.xml 必须 200').toBe(200);
 
@@ -70,9 +70,12 @@ test.describe('T-SI SEO 基础设施验收（本地 dev server）', () => {
 
     const body = await response.text();
 
-    // 至少 30 条 <loc>（项目实际 39：36 三语 + 2 单语 + 1 llms.txt root）
+    // 38 条 <loc>：36 个三语页面 + 2 个单语长尾页；/llms.txt 不属于搜索收录页
     const locCount = (body.match(/<loc>/g) ?? []).length;
-    expect(locCount, `sitemap 应至少 30 条 URL，实际 ${locCount}`).toBeGreaterThanOrEqual(30);
+    expect(locCount, `sitemap 应为 38 条 URL，实际 ${locCount}`).toBe(38);
+    expect(body, 'sitemap 不应包含 /llms.txt').not.toContain(
+      '<loc>https://papeltools.com/llms.txt</loc>'
+    );
 
     // x-default hreflang 已落地（2026-08-11 commit 7dcc2a3）
     expect(body, '含 x-default hreflang').toContain('x-default');
@@ -116,6 +119,9 @@ test.describe('T-SI SEO 基础设施验收（本地 dev server）', () => {
     expect(rootHtml, '根路径必须是英文文档').toContain('<html lang="en"');
     expect(rootHtml, '根路径 canonical 指向自身').toMatch(
       /<link[^>]+rel="canonical"[^>]+href="https:\/\/papeltools\.com\/"/
+    );
+    expect(rootHtml, '不应声明不存在的站内搜索 SearchAction').not.toContain(
+      '"@type":"SearchAction"'
     );
 
     const englishAlias = await request.get('/en/', { maxRedirects: 0 });

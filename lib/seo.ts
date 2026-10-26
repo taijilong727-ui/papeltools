@@ -201,9 +201,7 @@ export function organizationJsonLd() {
   };
 }
 
-/**
- * WebSite Schema（首页搜索框）
- */
+/** WebSite Schema（站点级身份声明） */
 export function webSiteJsonLd(locale: Locale) {
   return {
     '@context': 'https://schema.org',
@@ -211,14 +209,6 @@ export function webSiteJsonLd(locale: Locale) {
     name: 'Papel Tools',
     url: locale === 'en' ? SITE_URL : `${SITE_URL}/${locale}/`,
     inLanguage: locale === 'pt' ? 'pt-BR' : hreflangMap[locale],
-    potentialAction: {
-      '@type': 'SearchAction',
-      target: {
-        '@type': 'EntryPoint',
-        urlTemplate: `${SITE_URL}/?q={search_term_string}`,
-      },
-      'query-input': 'required name=search_term_string',
-    },
   };
 }
 

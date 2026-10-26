@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { pageMetadata } from '@/lib/seo';
+import { pageMetadata, webSiteJsonLd } from '@/lib/seo';
 
 describe('pageMetadata — 首页 canonical 与 hreflang', () => {
   it('英文首页 canonical、en hreflang 和 x-default 都指向根路径', () => {
@@ -31,5 +31,11 @@ describe('pageMetadata — 首页 canonical 与 hreflang', () => {
     expect(metadata.alternates?.canonical).toBe(
       'https://papeltools.com/en/pdf-to-markdown-for-llm/'
     );
+  });
+
+  it('WebSite JSON-LD 不声明不存在的 SearchAction', () => {
+    const schema = webSiteJsonLd('en');
+
+    expect(schema).not.toHaveProperty('potentialAction');
   });
 });

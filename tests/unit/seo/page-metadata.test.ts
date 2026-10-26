@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { pageMetadata, webSiteJsonLd } from '@/lib/seo';
+import { organizationJsonLd, pageMetadata, webSiteJsonLd } from '@/lib/seo';
 
 describe('pageMetadata — 首页 canonical 与 hreflang', () => {
   it('英文首页 canonical、en hreflang 和 x-default 都指向根路径', () => {
@@ -37,5 +37,15 @@ describe('pageMetadata — 首页 canonical 与 hreflang', () => {
     const schema = webSiteJsonLd('en');
 
     expect(schema).not.toHaveProperty('potentialAction');
+  });
+
+  it('Organization JSON-LD 使用有效联系页和真实身份链接', () => {
+    const schema = organizationJsonLd();
+
+    expect(schema.contactPoint[0]?.url).toBe('https://papeltools.com/en/contact/');
+    expect(schema.sameAs).toEqual([
+      'https://github.com/taijilong727-ui/papeltools',
+      'https://chromewebstore.google.com/detail/papel-tools-pdf-to-markdo/hogkjfcelpcjodkmoegippbdkmnaapmj',
+    ]);
   });
 });

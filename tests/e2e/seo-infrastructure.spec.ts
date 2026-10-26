@@ -144,4 +144,18 @@ test.describe('T-SI SEO 基础设施验收（本地 dev server）', () => {
     await expect(page.locator('html')).toHaveAttribute('lang', 'en');
     await expect(page).toHaveURL('/');
   });
+
+  test('T-SI-06 三语 ORPHAN 页面已获得正文内链', async ({ request }) => {
+    const cases = [
+      ['/en/pdf-to-markdown-for-llm/', '/en/pdf-to-markdown-with-tables/'],
+      ['/es/pdf-to-markdown-for-llm/', '/es/pdf-a-markdown-gratis/'],
+      ['/pt/pdf-to-markdown-for-llm/', '/pt/converter-pdf-em-markdown-gratis/'],
+    ] as const;
+
+    for (const [source, target] of cases) {
+      const response = await request.get(source);
+      expect(response.status(), `${source} 必须 200`).toBe(200);
+      expect(await response.text(), `${source} 应链接到 ${target}`).toContain(`href="${target}"`);
+    }
+  });
 });

@@ -23,6 +23,10 @@ import { locales, hreflangMap, type Locale } from '@/lib/i18n/config';
  */
 export const SITE_URL = 'https://papeltools.com';
 
+const GITHUB_URL = 'https://github.com/taijilong727-ui/papeltools';
+const CHROME_WEB_STORE_URL =
+  'https://chromewebstore.google.com/detail/papel-tools-pdf-to-markdo/hogkjfcelpcjodkmoegippbdkmnaapmj';
+
 /**
  * 构造绝对 URL — 与 lib/i18n/pageMetadata 规则一致：
  * 根路径对 en 省略前缀，子路径恒带 locale 前缀。
@@ -182,17 +186,13 @@ export function organizationJsonLd() {
     name: 'Papel Tools',
     url: SITE_URL,
     logo: `${SITE_URL}/favicon.svg`,
-    sameAs: [
-      // 'https://github.com/papeltools' — GitHub 仓库未上线，等项目公开后启用（同 Twitter / HuggingFace 占位模式）
-      // 'https://twitter.com/papeltools',
-      // 'https://huggingface.co/papeltools',
-    ],
+    sameAs: [GITHUB_URL, CHROME_WEB_STORE_URL],
     contactPoint: [
       {
         '@type': 'ContactPoint',
         email: 'taijilong727@gmail.com',
         contactType: 'customer support',
-        url: `${SITE_URL}/contact`,
+        url: `${SITE_URL}/en/contact/`,
         availableLanguage: ['English', 'Spanish', 'Portuguese'],
       },
     ],

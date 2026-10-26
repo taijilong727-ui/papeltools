@@ -14,38 +14,36 @@ export const dynamic = 'force-static';
  *
  * 参考：PRD §7.2 hreflang 互链 + docs/Sitemap-Robots-Llms三件套审查与GSC提交指南-2026-08-11
  */
-// 固定 lastmod 而非 new Date()：避免每次部署 <lastmod> 全刷新
-// 诱发不必要重爬（与 [[GSC冷启动与收录稳定性指南-2026-08-04]] §3.2 "为改而改有害" 配套）
-// 内容真实变更时手动同步此处
-const LAST_MODIFIED = '2026-08-11';
+// 固定 lastmod 而非构建时间：避免每次部署全量刷新 <lastmod>
+// 只在对应路由内容真实变化时更新；未修改页面保持原日期。
+const DEFAULT_LAST_MODIFIED = '2026-08-11';
+const CURRENT_CONTENT_LAST_MODIFIED = '2026-10-26';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://papeltools.com';
-  const lastModified = new Date(LAST_MODIFIED);
-
   const routes = [
-    { path: '', priority: 1.0, changeFrequency: 'weekly' as const },
-    { path: '/privacy', priority: 0.2, changeFrequency: 'yearly' as const },
-    { path: '/terms', priority: 0.2, changeFrequency: 'yearly' as const },
-    { path: '/contact', priority: 0.4, changeFrequency: 'monthly' as const },
+    { path: '', priority: 1.0, changeFrequency: 'weekly' as const, lastModified: CURRENT_CONTENT_LAST_MODIFIED },
+    { path: '/privacy', priority: 0.2, changeFrequency: 'yearly' as const, lastModified: DEFAULT_LAST_MODIFIED },
+    { path: '/terms', priority: 0.2, changeFrequency: 'yearly' as const, lastModified: DEFAULT_LAST_MODIFIED },
+    { path: '/contact', priority: 0.4, changeFrequency: 'monthly' as const, lastModified: DEFAULT_LAST_MODIFIED },
     // Phase 2/3 页面（路由已存在但 P2 内容，预留）
-    { path: '/pdf-to-markdown-for-llm', priority: 0.9, changeFrequency: 'weekly' as const },
-    { path: '/pdf-to-markdown-for-obsidian', priority: 0.9, changeFrequency: 'weekly' as const },
-    { path: '/pdf-to-markdown-for-rag', priority: 0.8, changeFrequency: 'weekly' as const },
-    { path: '/pdf-to-markdown-free-no-upload', priority: 0.9, changeFrequency: 'weekly' as const },
+    { path: '/pdf-to-markdown-for-llm', priority: 0.9, changeFrequency: 'weekly' as const, lastModified: CURRENT_CONTENT_LAST_MODIFIED },
+    { path: '/pdf-to-markdown-for-obsidian', priority: 0.9, changeFrequency: 'weekly' as const, lastModified: CURRENT_CONTENT_LAST_MODIFIED },
+    { path: '/pdf-to-markdown-for-rag', priority: 0.8, changeFrequency: 'weekly' as const, lastModified: CURRENT_CONTENT_LAST_MODIFIED },
+    { path: '/pdf-to-markdown-free-no-upload', priority: 0.9, changeFrequency: 'weekly' as const, lastModified: CURRENT_CONTENT_LAST_MODIFIED },
     // /mcp 是 MCP 关键词核心（开发者文档 hub），SEO 主战场升到 0.9
-    { path: '/mcp', priority: 0.9, changeFrequency: 'monthly' as const },
+    { path: '/mcp', priority: 0.9, changeFrequency: 'monthly' as const, lastModified: DEFAULT_LAST_MODIFIED },
     // Phase 2 新页（2026-08-08）— 关键词长尾 + 场景补全
     // /pdf-to-markdown-mcp 是 MCP 营销页（使用者向），与 /mcp 开发者文档分工（依 AGENTS.md 锁定决策）
-    { path: '/pdf-to-markdown-mcp', priority: 0.9, changeFrequency: 'weekly' as const },
-    { path: '/pdf-ocr-to-markdown', priority: 0.7, changeFrequency: 'weekly' as const },
-    { path: '/pdf-to-markdown-with-tables', priority: 0.7, changeFrequency: 'weekly' as const },
+    { path: '/pdf-to-markdown-mcp', priority: 0.9, changeFrequency: 'weekly' as const, lastModified: CURRENT_CONTENT_LAST_MODIFIED },
+    { path: '/pdf-ocr-to-markdown', priority: 0.7, changeFrequency: 'weekly' as const, lastModified: DEFAULT_LAST_MODIFIED },
+    { path: '/pdf-to-markdown-with-tables', priority: 0.7, changeFrequency: 'weekly' as const, lastModified: DEFAULT_LAST_MODIFIED },
   ];
 
   // 单语限定路由：仅在指定 locale 下生成（其他 locale notFound）
   const localeOnlyRoutes = [
-    { path: '/pdf-a-markdown-gratis', locale: 'es' as const, priority: 0.7, changeFrequency: 'weekly' as const },
-    { path: '/converter-pdf-em-markdown-gratis', locale: 'pt' as const, priority: 0.7, changeFrequency: 'weekly' as const },
+    { path: '/pdf-a-markdown-gratis', locale: 'es' as const, priority: 0.7, changeFrequency: 'weekly' as const, lastModified: DEFAULT_LAST_MODIFIED },
+    { path: '/converter-pdf-em-markdown-gratis', locale: 'pt' as const, priority: 0.7, changeFrequency: 'weekly' as const, lastModified: DEFAULT_LAST_MODIFIED },
   ];
 
   // 构造标准化 URL：始终带尾斜杠，与 canonical/hreflang/next.config trailingSlash 一致
@@ -63,7 +61,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       const url = localizedUrl(locale, route.path);
       sitemapEntries.push({
         url,
-        lastModified,
+        lastModified: new Date(route.lastModified),
         changeFrequency: route.changeFrequency,
         priority: route.priority,
         alternates: {
@@ -84,7 +82,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   for (const route of localeOnlyRoutes) {
     sitemapEntries.push({
       url: localizedUrl(route.locale, route.path),
-      lastModified,
+      lastModified: new Date(route.lastModified),
       changeFrequency: route.changeFrequency,
       priority: route.priority,
       // 无 alternates — 单语页面无三语互链

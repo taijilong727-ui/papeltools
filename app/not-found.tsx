@@ -29,7 +29,7 @@ export default function NotFound() {
             That page does not exist — but the converter does.
           </p>
           <Link
-            href="/en/"
+    href="/"
             style={{
               display: 'inline-block',
               marginTop: '24px',

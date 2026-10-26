@@ -20,6 +20,7 @@ import { test, expect } from '@playwright/test';
 import type { APIRequestContext } from '@playwright/test';
 import { readFileSync } from 'node:fs';
 import path from 'node:path';
+import { MCP_SERVER_VERSION } from '@/lib/mcp/info';
 
 const fixture = (name: string) => path.join(__dirname, '..', 'fixtures', name);
 
@@ -82,7 +83,7 @@ test.describe('MCP 端点冒烟（§5.3 固化）', () => {
     expect(res.status()).toBe(200);
     const body = await res.json();
     expect(body.result?.serverInfo?.name).toBe('papeltools-mcp');
-    expect(body.result?.serverInfo?.version).toBe('0.1.0');
+    expect(body.result?.serverInfo?.version).toBe(MCP_SERVER_VERSION);
     // 服务端声明了 tools 能力
     expect(body.result?.capabilities?.tools).toBeDefined();
   });

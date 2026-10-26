@@ -42,7 +42,14 @@ export function Header({ locale }: HeaderProps) {
     // 计算目标路径 — 始终带 locale 前缀，避免 Next.js 路由 404
     // （旧版"target === 'en' ? pathWithoutLocale : ..."导致切到 EN 时跳到根路径如 /pdf-to-markdown-for-llm/，
     //  触发 Next.js 404 因为 [locale] 动态段是路由必需）
-    const targetPath = `/${target}${pathWithoutLocale === '/' ? '/' : pathWithoutLocale}`;
+    const isLocaleHome =
+      pathname === '/' ||
+      pathname === `/${locale}` ||
+      pathname === `/${locale}/`;
+    const targetPath =
+      target === 'en' && isLocaleHome
+        ? '/'
+        : `/${target}${pathWithoutLocale === '/' ? '/' : pathWithoutLocale}`;
     router.push(targetPath);
   };
 

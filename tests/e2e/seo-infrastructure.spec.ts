@@ -5,6 +5,7 @@
  * - T-SI-01 robots.txt：HTTP 200 + 含源站 `User-Agent: *` + `Sitemap: https://papeltools.com/sitemap.xml` + 关键 AI 爬虫规则
  * - T-SI-02 sitemap.xml：HTTP 200 + application/xml + 至少 30 条 <loc>
  * - T-SI-03 llms.txt：HTTP 200 + text/plain + 含 "# Papel Tools" + 含 "@modelcontextprotocol/sdk" 版本号
+ * - T-SI-04 根路径：英文首页直接 200，/en/ 永久 308 回根路径
  *
  * 设计：使用 Playwright 的 request fixture（不发完整 browser，跳过 JS 执行，纯 HTTP）。
  * baseURL = http://localhost:3000（dev server），跑在 webServer 配置中。
@@ -51,9 +52,9 @@ test.describe('T-SI SEO 基础设施验收（本地 dev server）', () => {
       'Sitemap: https://papeltools.com/sitemap.xml'
     );
 
-    // 不应混入 apex 域名（防止 v1.0 的 308 链污染）
-    expect(body, '不应含 apex Sitemap URL').not.toContain(
-      'Sitemap: https://papeltools.com/sitemap.xml'
+    // 不应混入旧 www 域名（防止 v1.1 的双 sitemap 污染）
+    expect(body, '不应含 www Sitemap URL').not.toContain(
+      'Sitemap: https://www.papeltools.com/sitemap.xml'
     );
 
     // 不应混入 Yandex 时代的 host: 字段（v1.0 已删除）
@@ -76,8 +77,9 @@ test.describe('T-SI SEO 基础设施验收（本地 dev server）', () => {
     // x-default hreflang 已落地（2026-08-11 commit 7dcc2a3）
     expect(body, '含 x-default hreflang').toContain('x-default');
 
-    // 不应含 apex 域名（v1.0 残留）
-    expect(body, 'sitemap 不应含 apex URL').not.toMatch(/<loc>https:\/\/papeltools\.com\//);
+    // 首页必须是根路径，sitemap 不应再提交会跳转的 /en/
+    expect(body, '含英文根首页').toContain('<loc>https://papeltools.com/</loc>');
+    expect(body, '不应含 /en/ 首页').not.toContain('<loc>https://papeltools.com/en/</loc>');
   });
 
   test('T-SI-03 /llms.txt 服务机器可读 Markdown 站点概要', async ({ request }) => {
@@ -103,5 +105,37 @@ test.describe('T-SI SEO 基础设施验收（本地 dev server）', () => {
 
     // 含 Privacy 段（品牌主张）
     expect(body, '含 Privacy 段').toMatch(/^## Privacy/im);
+  });
+
+  test('T-SI-04 根路径直接渲染英文首页，/en/ 永久 308 回根路径', async ({ request }) => {
+    const root = await request.get('/');
+    expect(root.status(), '根路径必须直接 200').toBe(200);
+    expect(root.headers()['content-type'] ?? '').toContain('text/html');
+
+    const rootHtml = await root.text();
+    expect(rootHtml, '根路径必须是英文文档').toContain('<html lang="en"');
+    expect(rootHtml, '根路径 canonical 指向自身').toMatch(
+      /<link[^>]+rel="canonical"[^>]+href="https:\/\/papeltools\.com\/"/
+    );
+
+    const englishAlias = await request.get('/en/', { maxRedirects: 0 });
+    expect(englishAlias.status(), '/en/ 必须永久重定向').toBe(308);
+    const location = englishAlias.headers()['location'];
+    expect(location, '/en/ 必须提供 Location').toBeTruthy();
+    expect(new URL(location ?? '/', 'http://localhost:3000').pathname).toBe('/');
+
+    const spanish = await request.get('/es/');
+    expect(spanish.status(), '/es/ 必须保持 200').toBe(200);
+    expect(await spanish.text(), '/es/ canonical 必须自指').toMatch(
+      /<link[^>]+rel="canonical"[^>]+href="https:\/\/papeltools\.com\/es\/"/
+    );
+  });
+
+  test('T-SI-05 从 /es/ 首页切换到 EN 时进入根路径', async ({ page }) => {
+    await page.goto('/es/');
+    await page.getByRole('button', { name: 'Switch language to EN' }).click();
+    await page.waitForURL('/');
+    await expect(page.locator('html')).toHaveAttribute('lang', 'en');
+    await expect(page).toHaveURL('/');
   });
 });

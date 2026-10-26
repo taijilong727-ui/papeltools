@@ -5,7 +5,7 @@
  * - AI 检索爬虫放行（OAI-SearchBot / PerplexityBot / Claude-SearchBot / Claude-User / ChatGPT-User / Googlebot / Bingbot）
  * - AI 训练爬虫屏蔽（GPTBot / CCBot / ClaudeBot / anthropic-ai / Bytespider）
  * - 默认规则（Allow /，Disallow /api/ 与 /_next/）
- * - Sitemap 声明对齐 canonical（www.papeltools.com，2026-08-11 v1.1 修复）
+ * - Sitemap 声明对齐 apex canonical（papeltools.com）
  *
  * 触发场景：防止未来重构意外丢失 AI 爬虫放行或 sitemap 声明。
  * 生产实测（2026-08-15）：Cloudflare Managed Robots 以 Prepend 行为追加 9-bot 屏蔽段 + Content Signal，
@@ -77,9 +77,8 @@ describe('app/robots.ts — 源站规则完整性', () => {
   });
 
   describe('Sitemap 声明', () => {
-    it('指向 canonical www.papeltools.com/sitemap.xml', () => {
-      // 2026-08-11 v1.1 修复：从 apex 切到 www，与 canonical 对齐
-      // 此前用 apex 会导致每次爬虫多一跳 308（Vercel Domain 层 apex→www 重定向）
+    it('指向 canonical papeltools.com/sitemap.xml', () => {
+      // 2026-09-08 起 Vercel 以 apex 为主域名，sitemap 必须与 canonical 一致
       expect(result.sitemap).toBe('https://papeltools.com/sitemap.xml');
     });
 

@@ -51,8 +51,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   ];
 
   // 构造标准化 URL：始终带尾斜杠，与 canonical/hreflang/next.config trailingSlash 一致
-  // 注意：子路径（落地页等）静态导出后位于 out/{locale}/ 下，必须恒带 locale 前缀（含 en）；
-  // 仅根路径（''）对 en 省略前缀（out/index.html 存在且重定向到 /en/）
+  // 英文首页的唯一 canonical 是根路径；英文子页面仍使用 /en/ 前缀。
   const localizedUrl = (locale: string, path: string): string => {
     const localePrefix = path === '' && locale === 'en' ? '' : `/${locale}`;
     const pathWithSlash = path === '' ? '/' : `${path}/`;

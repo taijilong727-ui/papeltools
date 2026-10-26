@@ -81,8 +81,11 @@ test.describe('T-06 错误路径', () => {
     await page.goto('/en/');
     await page.setInputFiles('#converter input[type="file"]', fixture('sample-scanned.pdf'));
 
-    const alert = page.getByTestId('conversion-error');
-    await expect(alert).toContainText(/scanned/i, { timeout: 15_000 });
+    // 当前产品行为：检测到扫描件后展示 OCR 语言选择，不再走通用错误提示。
+    await expect(page.getByText(/This PDF is a scanned document/i)).toBeVisible({
+      timeout: 15_000,
+    });
+    await expect(page.getByRole('button', { name: 'Enable OCR (English)' })).toBeVisible();
   });
 
   test('T-06-08 转换过程中刷新 → 无残留状态，页面正常加载', async ({ page }) => {

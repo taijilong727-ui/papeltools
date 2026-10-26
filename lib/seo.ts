@@ -58,8 +58,9 @@ export function pageMetadata(
   title: string,
   description: string
 ): Metadata {
-  // 子路径恒带 locale 前缀（含 en），仅根路径对 en 省略前缀——与 sitemap.ts localizedUrl 规则一致
-  const localizedUrl = (l: Locale): string => `${SITE_URL}/${l}${path}/`;
+  // 根路径英文首页是 canonical 自身；其他页面（含英文子页面）恒带 locale 前缀
+  const localizedUrl = (l: Locale): string =>
+    l === 'en' && path === '' ? `${SITE_URL}/` : `${SITE_URL}/${l}${path}/`;
   const canonicalUrl = localizedUrl(locale);
   // OG/Twitter locale 的 BCP 47 表示（与 hreflang pt-br 一致）
   const ogLocale = locale === 'en' ? 'en_US' : locale === 'es' ? 'es_419' : 'pt_BR';

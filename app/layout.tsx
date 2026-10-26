@@ -8,7 +8,7 @@ import './globals.css';
  * 因为 next-intl 需要 [locale] 动态段在文档结构最外层。
  * 此处不渲染 <html>/<body>，避免与 [locale]/layout 嵌套冲突。
  *
- * 访问 `/` 时由 middleware（或 [locale]/page.tsx 静态生成）跳转到 `/en/`。
+ * `/` 由 app/(home) 分支直接渲染英文首页；其他语言由 [locale] 分支渲染。
  */
 export const metadata: Metadata = {
   metadataBase: new URL('https://papeltools.com'),

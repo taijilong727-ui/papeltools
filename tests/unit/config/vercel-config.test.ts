@@ -17,8 +17,7 @@ const vercelJson = JSON.parse(
   redirects: Array<{ source: string; destination: string; permanent: boolean }>;
 };
 
-// proxy.ts 也参与 / 的 locale 协商（hybrid 模式下生产边缘也跑 proxy），
-// 故"根路径 → /<locale>/"的契约由两边共同承担，需一并断言。
+// proxy.ts 负责 /en/ → / 的永久跳转；根路径本身必须是英文 200 页面。
 const proxyTs = readFileSync(
   path.resolve(__dirname, '../../../proxy.ts'),
   'utf-8'
@@ -59,18 +58,18 @@ describe('A-13 vercel.json — 安全响应头配置', () => {
     expect(cache).toBe('public, max-age=31536000, immutable');
   });
 
-  it('根路径 / 由 proxy.ts 协商到 /<locale>/（vercel.json 不再写死 /en/）', () => {
-    // vercel.json 不能再有 / → /en/ 永久重定向 —— 会与 proxy.ts 冲突，
-    // 且无法对讲 pt-BR / es-419 的用户做 locale 协商（2026-08-10 修复 C1）
+  it('根路径 / 直接渲染英文，由 proxy.ts 将 /en/ 永久 308 回根路径', () => {
+    // 根路径跳转不能写在 vercel.json：应用层必须直接返回英文首页 200。
     const rootRedirect = vercelJson.redirects.find((r) => r.source === '/');
     expect(rootRedirect).toBeUndefined();
 
-    // proxy.ts 必须包含"对 / 永远重定向到 /<locale>/"的逻辑（不接受 NextResponse.next）
-    expect(proxyTs).toContain("pathname !== '/'");
-    expect(proxyTs).toContain('url.pathname = `/${target}/`');
-    expect(proxyTs).not.toContain('return NextResponse.next();\n  }\n  const url');
-    // 必须有 defaultLocale 协商分支（Accept-Language / Cookie）
-    expect(proxyTs).toContain('accept-language');
-    expect(proxyTs).toContain('NEXT_LOCALE');
+    // /en/ 是历史别名，必须永久重定向回根首页。
+    expect(proxyTs).toContain("pathname === '/en'");
+    expect(proxyTs).toContain("url.pathname = '/'");
+    expect(proxyTs).toContain('NextResponse.redirect(url, 308)');
+
+    // 根首页不再读取浏览器语言或 Cookie 做重定向。
+    expect(proxyTs).not.toContain('accept-language');
+    expect(proxyTs).not.toContain('NEXT_LOCALE');
   });
 });
